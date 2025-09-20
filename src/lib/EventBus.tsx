@@ -1,6 +1,6 @@
 type EventType = 'dialog' | 'submit' | 'dismiss';
 
-export interface EventData { }
+export interface EventData {}
 
 export interface EventDataMap extends Record<EventType, any> {
   'dialog': React.ReactNode;

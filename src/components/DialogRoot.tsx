@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import EventBus, { type EventData } from "../lib/EventBus";
+import EventBus from "../lib/EventBus";
 
 const DialogRoot = () => {
   const [dialog, setDialog] = useState<React.ReactNode>(null);

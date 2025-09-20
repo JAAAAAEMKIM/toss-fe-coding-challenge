@@ -17,7 +17,6 @@ const RegisterForm = () => {
       
       const formData = new FormData(e.currentTarget);
       
-      // 각 필드의 값을 객체로 수집
       const data = {
         name: formData.get('name'),
         email: formData.get('email'),
@@ -25,7 +24,7 @@ const RegisterForm = () => {
         github: formData.get('github')
       };
     
-      EventBus.emit('submit', data as RegisterFormResult);
+      EventBus.emit('submit', data);
     }
 
   return (
