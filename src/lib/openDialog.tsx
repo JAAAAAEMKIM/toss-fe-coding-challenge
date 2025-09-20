@@ -1,21 +1,23 @@
-import type { ComponentProps } from "react";
 import EventBus, { type EventDataMap } from "./EventBus";
-import type RegisterForm from "../components/RegisterForm";
 
 
 const openDialog = async (Component: React.ReactNode) => {
-  EventBus.emit('dialog', Component);
+  EventBus.emit('dialog', Component);;
 
-  return new Promise<EventDataMap['close']>((resolve, reject) => {
-    EventBus.on('close', (event: CustomEvent<EventDataMap['close']>) => {
-      console.log('close', event.detail);
+  const result = await new Promise<EventDataMap['submit'] | null>((resolve) => {
+    const onSubmit = (event: CustomEvent<EventDataMap['submit']>) => {
       resolve(event.detail);
-    });
+    };
 
-    EventBus.on('error', (error: EventDataMap['error']) => {
-      reject(error);
-    });
+    const onDismiss = () => {
+      resolve(null);
+    };
+
+    EventBus.on('submit', onSubmit);
+    EventBus.on('dismiss', onDismiss);
   });
+  
+  return result;
 };
 
 export default openDialog;

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import EventBus from "../lib/EventBus";
+import EventBus, { type EventData } from "../lib/EventBus";
 
 const DialogRoot = () => {
   const [dialog, setDialog] = useState<React.ReactNode>(null);
@@ -7,16 +7,16 @@ const DialogRoot = () => {
 
   useEffect(() => {
     EventBus.on('dialog', (event: CustomEvent<React.ReactNode>) => {
-      console.log('dialog', event.detail);
       setDialog(event.detail);
       dialogRef.current?.showModal();
     });
-    EventBus.on('close', () => {
+    EventBus.on('submit', () => {
       setDialog(null);
       dialogRef.current?.close();
     });
-    EventBus.on('error', (error: Error) => {
-      console.error(error);
+    EventBus.on('dismiss', () => {
+      setDialog(null);
+      dialogRef.current?.close();
     });
   }, []);
 

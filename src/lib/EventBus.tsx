@@ -1,20 +1,24 @@
-type EventType = 'dialog' | 'close' | 'error';
+type EventType = 'dialog' | 'submit' | 'dismiss';
+
+export interface EventData { }
 
 export interface EventDataMap extends Record<EventType, any> {
   'dialog': React.ReactNode;
-  'close': {};
-  'error': Error;
-}
+  'submit': EventData;
+  'dismiss': null;
+};
+
+const eventBus = new EventTarget();
 
 const EventBus = {
-  on: <E extends EventType>(event: E, callback: (data: EventDataMap[E]) => void) => {
-    document.addEventListener(event, callback as EventListener);
+  on: <E extends keyof EventDataMap>(event: E, callback: (event: CustomEvent<EventDataMap[E]>) => void) => {
+    eventBus.addEventListener(event, callback as EventListener);
   },
-  off: <E extends EventType>(event: E, callback: (data: EventDataMap[E]) => void) => {
-    document.removeEventListener(event, callback as EventListener);
+  off: <E extends keyof EventDataMap>(event: E, callback: (event: CustomEvent<EventDataMap[E]>) => void) => {
+    eventBus.removeEventListener(event, callback as EventListener);
   },
-  emit: <E extends EventType>(event: E, data: EventDataMap[E]) => {
-    document.dispatchEvent(new CustomEvent(event, { detail: data as EventDataMap[E] }));
+  emit: <E extends keyof EventDataMap>(event: E, data: EventDataMap[E]) => {
+    eventBus.dispatchEvent(new CustomEvent(event, { detail: data as EventDataMap[E] }));
   },
 };
 
