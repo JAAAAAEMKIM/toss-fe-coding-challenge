@@ -1,0 +1,46 @@
+body:has(dialog[open]) {
+  overflow: hidden;
+}
+
+h1 {
+  margin: 0;
+}
+
+.dialog {
+  border:none;
+  border-radius: 10px;
+  overflow: auto;
+  padding: 0;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 600;
+}
+.input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.description {
+  font-size: 14px;
+  color: #666;
+}
+
+.primary-button {
+  background-color: #0048ff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.secondary-button {
+  background-color: #eee;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
